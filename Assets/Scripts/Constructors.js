@@ -4,4 +4,6 @@ function Brick() {
     this.y = 0;
     this.color = BrickTools.getRandomColor();
     this.locked = false;
+    this.height = 10;
+    this.width = 10;
 };
