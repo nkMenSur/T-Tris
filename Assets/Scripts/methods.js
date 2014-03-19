@@ -14,8 +14,6 @@ var BrickTools = {
     }
 }
 
-
-
 function createBrick() {
     if (!brickCreationLocked) {
         brickPool[brickAmount] = new Brick();
@@ -33,7 +31,6 @@ function naturalDown() {
         brickCreationLocked = false;
     }
 }
-
 
 function render() {
     var currentRect = brickPool[brickAmount - 1];

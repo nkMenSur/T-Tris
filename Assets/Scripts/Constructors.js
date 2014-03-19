@@ -6,7 +6,4 @@ function Brick() {
     this.current = true;
     this.height = 10;
     this.width = 10;
-    this.goRight = false,
-    this.goDown = false,
-    this.goLeft = false
 }
