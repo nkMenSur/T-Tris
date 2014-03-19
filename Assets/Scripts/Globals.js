@@ -1,0 +1,11 @@
+"use strict";
+var fps = null;
+var deltaTime;
+var doc = document;
+var canvasElement;
+var TTrisCanvas;
+var TTrisCanvasContext;
+var tickCounter = 0;
+var brickPool = {};
+var brickCreationLocked = false;
+var brickAmount = 0;

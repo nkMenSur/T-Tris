@@ -1,12 +1,7 @@
-"use strict";
-var fps = null;
-var canvasElement;
-var TTrisCanvas;
-var TTrisCanvasContext;
-var tickCounter = 0;
-var brickPool = {};
 
 $(function () {
+    "use strict";
+    deltaTime = 0;
     canvasElement = $('#TTris');
     TTrisCanvas = document.getElementById('TTris');
     TTrisCanvas.height = 600;
@@ -20,21 +15,13 @@ function GameTick(elapsed) {
     fps.update(elapsed);
 
     // --- Logic ---
-    count();
+    createBrick();
 
-    if (tickCounter % 60 == 0) {
-        createBrick();
+    if (new Date() - deltaTime >= 10) {
+        deltaTime = new Date();
+        console.log("tick");
+        naturalDown();
     }
-
-
-
-
-
-
-
-
-
-    // --- Rendering ---
-    TTrisCanvasContext.clearRect(0, 0, TTrisCanvas.width, TTrisCanvas.height);
-
+     
+    render();
 }
