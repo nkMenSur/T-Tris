@@ -1,16 +1,25 @@
 "use Strict";
 var BrickTools = {
     getRandomColor: function () {
-        var bgCanvasColor = '#bef093';
         while (true) {
             var rndmColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-            if (rndmColor != bgCanvasColor) {
+            if (rndmColor != Constants.colors.BackgroundCanvasColor) {
                 return rndmColor;
             }
         }
     },
     getRandomXPosition: function () {
-        return Math.floor(Math.random() * 40) * 10;
+        var delta = new Date();
+        var xPos = Math.floor(Math.random() * Constants.measurements.CanvasWidth / 10) * Constants.measurements.BrickWidth + Constants.measurements.BrickWidth;
+        while (xPos < 0 || xPos >= Constants.measurements.CanvasWidth - Constants.measurements.BrickWidth) {
+            xPos = Math.floor(Math.random() * Constants.measurements.CanvasWidth / 10) * Constants.measurements.BrickWidth + Constants.measurements.BrickWidth;
+        }
+        console.log(new Date() - delta);
+        return xPos;
+    },
+    getStartPosition: function () {
+        var yPos = Constants.measurements.BrickHeight * (-1);
+        return yPos;
     }
 }
 
@@ -23,26 +32,57 @@ function createBrick() {
 }
 
 function naturalDown() {
-    var currentBrick = brickPool[brickAmount-1];
-    
-    if (currentBrick != undefined && currentBrick.y < TTrisCanvas.height -10) {
-        currentBrick.y += 10;
-    } else if (currentBrick.y == TTrisCanvas.height - 10) {
-        brickCreationLocked = false;
+    if (new Date() - deltaTime >= Constants.times.MillisecondsPerTick) {
+        var currentBrick = brickPool[brickAmount - 1];
+
+        if (currentBrick != undefined && currentBrick.y < foregroundCanvas.height - currentBrick.height) {
+            currentBrick.y += Constants.measurements.BrickHeight;
+        } else if (currentBrick.y == foregroundCanvas.height - currentBrick.height) {
+            brickCreationLocked = false;
+        }
+        deltaTime = new Date();
     }
 }
 
 function render() {
     var currentRect = brickPool[brickAmount - 1];
-    TTrisCanvasContext.clearRect(0, 0, TTrisCanvas.width, TTrisCanvas.height);
-    //TTrisCanvasContext.fillRect(currentRect.x, currentRect.y, currentRect.width, currentRect.height);
-    for (var index in brickPool) {
-        var brick = brickPool[index]
 
-        TTrisCanvasContext.beginPath();
-        TTrisCanvasContext.fillStyle = brick.color;
-        TTrisCanvasContext.fillRect(brick.x, brick.y, brick.width, brick.height);
-        TTrisCanvasContext.stroke();
+    foregroundCanvasContext.clearRect(0, 0, foregroundCanvas.width, foregroundCanvas.height);
 
+    for (var currentBrickPosition in brickPool) {
+        var brick = brickPool[currentBrickPosition]
+        
+        foregroundCanvasContext.beginPath();
+        foregroundCanvasContext.fillStyle = brick.color;
+        foregroundCanvasContext.fillRect(brick.x, brick.y, brick.width, brick.height);
+        foregroundCanvasContext.stroke();
     }
+}
+
+function initCanvas() {
+    canvasContainer = doc.getElementById('playground');
+
+    backgroundCanvas = doc.createElement('canvas');
+    backgroundCanvas.height = Constants.measurements.CanvasHeight;
+    backgroundCanvas.width = Constants.measurements.CanvasWidth;
+    backgroundCanvasContext = backgroundCanvas.getContext("2d");
+
+    foregroundCanvas = doc.createElement('canvas');
+    foregroundCanvas.height = Constants.measurements.CanvasHeight;
+    foregroundCanvas.width = Constants.measurements.CanvasWidth;
+    foregroundCanvasContext = foregroundCanvas.getContext("2d");
+
+    canvasContainer.appendChild(backgroundCanvas);
+    canvasContainer.appendChild(foregroundCanvas);
+    
+    for (var x = 0; x < backgroundCanvas.width / Constants.measurements.BrickWidth ; x++) {
+        for (var y = 0; y < backgroundCanvas.height / Constants.measurements.BrickHeight; y++) {
+            grid[x + '|' + y] = new Placeholder();
+        }
+    }
+    
+    backgroundCanvasContext.beginPath();
+    backgroundCanvasContext.fillStyle = Constants.colors.BackgroundCanvasColor;
+    backgroundCanvasContext.fillRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+    backgroundCanvasContext.stroke();
 }

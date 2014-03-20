@@ -5,12 +5,12 @@
 function FPSMeter (cls, root) {
     this.fpsArray = new Array();
     this.fpsIndex = 0;
-    this.fps = document.createElement("div");
+    this.fps = doc.createElement("div");
     this.fps.setAttribute("class", cls);
     root.appendChild(this.fps);
     this.fpst = new Array();
     for (var i = 0; i < 3; ++i) {
-        this.fpst.push(this.fps.appendChild(document.createElement("p")));
+        this.fpst.push(this.fps.appendChild(doc.createElement("p")));
     }
 }
 

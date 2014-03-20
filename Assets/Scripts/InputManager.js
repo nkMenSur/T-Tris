@@ -6,36 +6,26 @@ function checkKeyDown(e) {
     e = e || window.e;
     var key = e.keyCode;
     var currentBrick = brickPool[brickAmount - 1];
-
-    if (currentBrick.x < TTrisCanvas.width) {
-        if (key === Constants.keyCodes.Down && currentBrick.y < TTrisCanvas.height - 10) {
-            currentBrick.y += 10;
+    if (currentBrick.x < foregroundCanvas.width) {
+        if (key === Constants.keyCodes.Down && currentBrick.y < foregroundCanvas.height - Constants.measurements.BrickHeight) {
+            currentBrick.y += Constants.measurements.BrickHeight;
             e.preventDefault();
         }
 
         if (key === Constants.keyCodes.Right) {
-            if (currentBrick.x != TTrisCanvas.width -10) {
-                currentBrick.x += 10;
+            if (currentBrick.x != foregroundCanvas.width - Constants.measurements.BrickWidth*2) {
+                currentBrick.x += Constants.measurements.BrickWidth;
             }
             e.preventDefault();
         }
 
         if (key === Constants.keyCodes.Left) {
-            if (currentBrick.x == 0) {
-                currentBrick.x == 0;
+            if (currentBrick.x != Constants.measurements.BrickWidth) {
+                currentBrick.x -= Constants.measurements.BrickWidth;
             } else {
-                currentBrick.x -= 10;
+                currentBrick.x == Constants.measurements.BrickWidth;
             }
             e.preventDefault();
         }
     }
-
 }
-
-function directionSet(brick) {
-    ///*directions: 1 = up, 2 = right, 3 = down, 4 = left*/
-    //if (brick.goUp) { brick.direction = "up"; };
-    //if (brick.goRight) { brick.direction = "up"; };
-    //if (brick.goDown) { brick.direction = "up"; };
-    //if (brick.goLeft) { brick.direction = "up"; };
-};

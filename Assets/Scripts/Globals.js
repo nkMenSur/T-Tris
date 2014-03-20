@@ -2,10 +2,13 @@
 var fps = null;
 var deltaTime;
 var doc = document;
-var canvasElement;
-var TTrisCanvas;
-var TTrisCanvasContext;
 var tickCounter = 0;
 var brickPool = {};
+var grid = {};
 var brickCreationLocked = false;
 var brickAmount = 0;
+var backgroundCanvas;
+var foregroundCanvas;
+var backgroundCanvasContext;
+var foregroundCanvasContext;
+var canvasContainer;

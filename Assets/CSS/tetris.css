@@ -2,14 +2,17 @@
     background-color: #bef093;
 }
 
-.absoluteCenter {
+.absoluteCenter, #playground > canvas {
   margin: auto;
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
 }
-.playground {
+#playground {
     height:100%;
     width:100%;
+}
+#playground > canvas {
+    position:absolute;    
 }
 .test{
     height:1300px;

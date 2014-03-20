@@ -9,7 +9,7 @@ var GameLoopManager = new function () {
         var prevTick = this.gameTick;
         this.gameTick = gameTick;
         if (this.lastTime == 0) {
-            
+
             var bindThis = this;
             requestAnimationFrame(function () { bindThis.tick(); });
             this.lastTime = 0;
@@ -33,7 +33,7 @@ var GameLoopManager = new function () {
         var elapsed = timeNow - this.lastTime;
         if (elapsed > 0) {
             if (this.lastTime != 0) {
-                if (elapsed > 1000) 
+                if (elapsed > 1000)
                     elapsed = 1000;
                 var smoothElapsed = (elapsed + this.prevElapsed + this.prevElapsed2) / 3;
                 this.gameTick(0.001 * smoothElapsed);

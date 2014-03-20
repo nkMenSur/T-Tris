@@ -1,9 +1,12 @@
 "use strict";
 function Brick() {
     this.x = BrickTools.getRandomXPosition();
-    this.y = -10;
+    this.y = BrickTools.getStartPosition();
     this.color = BrickTools.getRandomColor();
-    this.current = true;
-    this.height = 10;
-    this.width = 10;
+    this.height = Constants.measurements.BrickHeight;
+    this.width = Constants.measurements.BrickWidth;
+}
+
+function Placeholder(x,y) {
+    this.occupied = false;
 }
