@@ -14,7 +14,6 @@ function GameTick(elapsed) {
     createBrick();
     naturalDown();
 
-
     // --- Rendering ---
     render();
 }

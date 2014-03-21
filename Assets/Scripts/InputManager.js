@@ -7,20 +7,20 @@ function checkKeyDown(e) {
     var key = e.keyCode;
     var currentBrick = brickPool[brickAmount - 1];
     if (currentBrick.x < foregroundCanvas.width) {
-        if (key === Constants.keyCodes.Down && currentBrick.y < foregroundCanvas.height - Constants.measurements.BrickHeight) {
+        if ((key === Constants.keyCodes.SDown|| key === Constants.keyCodes.ArrowDown) && currentBrick.y < foregroundCanvas.height - Constants.measurements.BrickHeight) {
             currentBrick.y += Constants.measurements.BrickHeight;
             e.preventDefault();
         }
 
-        if (key === Constants.keyCodes.Right) {
-            if (currentBrick.x != foregroundCanvas.width - Constants.measurements.BrickWidth*2) {
+        if (key === Constants.keyCodes.DRight || key === Constants.keyCodes.ArrowRight) {
+            if (currentBrick.x != foregroundCanvas.width - Constants.measurements.BrickWidth) {
                 currentBrick.x += Constants.measurements.BrickWidth;
             }
             e.preventDefault();
         }
 
-        if (key === Constants.keyCodes.Left) {
-            if (currentBrick.x != Constants.measurements.BrickWidth) {
+        if (key === Constants.keyCodes.ALeft || key === Constants.keyCodes.ArrowLeft) {
+            if (currentBrick.x != 0) {
                 currentBrick.x -= Constants.measurements.BrickWidth;
             } else {
                 currentBrick.x == Constants.measurements.BrickWidth;
@@ -28,4 +28,17 @@ function checkKeyDown(e) {
             e.preventDefault();
         }
     }
+}
+
+function checkCollision(direction) {
+    //TODO: collision detection
+    //if (true) {
+    //    return true;
+    //}
+    //if (true) {
+    //    return true;
+    //}
+    //if (true) { 
+    //}
+    //return false;
 }

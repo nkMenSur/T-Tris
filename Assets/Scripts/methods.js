@@ -10,11 +10,7 @@ var BrickTools = {
     },
     getRandomXPosition: function () {
         var delta = new Date();
-        var xPos = Math.floor(Math.random() * Constants.measurements.CanvasWidth / 10) * Constants.measurements.BrickWidth + Constants.measurements.BrickWidth;
-        while (xPos < 0 || xPos >= Constants.measurements.CanvasWidth - Constants.measurements.BrickWidth) {
-            xPos = Math.floor(Math.random() * Constants.measurements.CanvasWidth / 10) * Constants.measurements.BrickWidth + Constants.measurements.BrickWidth;
-        }
-        console.log(new Date() - delta);
+        var xPos = Math.abs(Math.floor(Math.random() * (Constants.measurements.CanvasWidth + Constants.measurements.BrickWidth) / 10) * Constants.measurements.BrickWidth - Constants.measurements.BrickWidth);
         return xPos;
     },
     getStartPosition: function () {
@@ -35,9 +31,10 @@ function naturalDown() {
     if (new Date() - deltaTime >= Constants.times.MillisecondsPerTick) {
         var currentBrick = brickPool[brickAmount - 1];
 
-        if (currentBrick != undefined && currentBrick.y < foregroundCanvas.height - currentBrick.height) {
+        if (currentBrick != undefined && currentBrick.y < foregroundCanvas.height - currentBrick.height && !grid[currentBrick.x + '|' + (currentBrick.y + currentBrick.height)].occupied) {
             currentBrick.y += Constants.measurements.BrickHeight;
-        } else if (currentBrick.y == foregroundCanvas.height - currentBrick.height) {
+        } else if (currentBrick.y == foregroundCanvas.height - currentBrick.height || grid[currentBrick.x + '|' + (currentBrick.y + currentBrick.height)].occupied) {
+            grid[currentBrick.x + '|' + currentBrick.y].occupied = true;
             brickCreationLocked = false;
         }
         deltaTime = new Date();
@@ -75,8 +72,8 @@ function initCanvas() {
     canvasContainer.appendChild(backgroundCanvas);
     canvasContainer.appendChild(foregroundCanvas);
     
-    for (var x = 0; x < backgroundCanvas.width / Constants.measurements.BrickWidth ; x++) {
-        for (var y = 0; y < backgroundCanvas.height / Constants.measurements.BrickHeight; y++) {
+    for (var x = 0; x < backgroundCanvas.width; x += Constants.measurements.BrickWidth) {
+        for (var y = 0; y < backgroundCanvas.height; y += Constants.measurements.BrickHeight) {
             grid[x + '|' + y] = new Placeholder();
         }
     }
